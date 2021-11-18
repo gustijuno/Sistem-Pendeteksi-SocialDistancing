@@ -103,7 +103,21 @@ def main():
         centroid_dict = dict()
 
         #ELLA AMELIA WIDODO
+            objects = tracker.update(rects)
+                    for (objectId, bbox) in objects.items():
+                        x1, y1, x2, y2 = bbox
+                        x1 = int(x1)
+                        y1 = int(y1)
+                        x2 = int(x2)
+                        y2 = int(y2)
+                        cX = int((x1 + x2) / 2.0)
+                        cY = int((y1 + y2) / 2.0)
 
+
+                        centroid_dict[objectId] = (cX, cY, x1, y1, x2, y2)
+
+            # text = "ID: {}".format(objectId)
+            # cv2.putText(frame, text, (x1, y1-5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 1)
         #..
 
     #MUHAMMAD GUSTI HERJUNO
@@ -126,5 +140,24 @@ def main():
     #..
 
 #ELLA AMELIA WIDODO
+fps_end_time = datetime.datetime.now()
+        time_diff = fps_end_time - fps_start_time
+        if time_diff.seconds == 0:
+            fps = 0.0
+        else:
+            fps = (total_frames / time_diff.seconds)
 
+        fps_text = "FPS: {:.2f}".format(fps)
+
+        cv2.putText(frame, fps_text, (5, 30), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 255), 1)
+
+        cv2.imshow("Application", frame)
+        key = cv2.waitKey(1)
+        if key == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
+
+
+main()
 #..
